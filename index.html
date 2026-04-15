@@ -227,8 +227,100 @@
 
   <!-- ===== Theme color ===== -->
   <meta name="theme-color" content="#0a0a0a">
+  <style>
+    /* Preloader: twin L's drawn in gold */
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0a0a0a;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 2rem;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
+    #preloader svg { width: clamp(120px, 16vw, 180px); height: auto; overflow: visible; }
+    #preloader svg path {
+      fill: none;
+      stroke: #b8933f;
+      stroke-width: 3;
+      stroke-linecap: square;
+      stroke-linejoin: miter;
+      stroke-dasharray: 240;
+      stroke-dashoffset: 240;
+      animation: loL-draw 1.6s cubic-bezier(0.65,0,0.35,1) forwards;
+      filter: drop-shadow(0 0 12px rgba(184,147,63,0.25));
+    }
+    #preloader svg path.lol-right { animation-delay: 0.2s; }
+    #preloader svg .lol-fill {
+      opacity: 0;
+      animation: loL-fill 0.8s ease 1.6s forwards;
+    }
+    #preloader .lol-word {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 0.72rem; letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: #b8933f;
+      opacity: 0;
+      animation: loL-word 0.9s ease 1.9s forwards;
+      padding-left: 0.55em;
+    }
+    @keyframes loL-draw {
+      to { stroke-dashoffset: 0; }
+    }
+    @keyframes loL-fill {
+      to { opacity: 1; }
+    }
+    @keyframes loL-word {
+      0%   { opacity: 0; transform: translateY(6px); letter-spacing: 0.7em; }
+      100% { opacity: 1; transform: translateY(0); letter-spacing: 0.55em; }
+    }
+    body.loading { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) {
+      #preloader svg path, #preloader svg .lol-fill, #preloader .lol-word { animation-duration: 0.01s; animation-delay: 0s; }
+    }
+  </style>
 </head>
-<body>
+<body class="loading">
+
+<!-- ==============================
+     PRELOADER
+============================== -->
+<div id="preloader" role="status" aria-label="Loading Lords of Luxury">
+  <svg viewBox="0 0 140 80" aria-hidden="true">
+    <!-- Left L (standard) -->
+    <path d="M 20 10 L 20 70 L 62 70" />
+    <!-- Right L (mirrored, facing the left L) -->
+    <path class="lol-right" d="M 120 10 L 120 70 L 78 70" />
+    <!-- Soft gold fill once strokes complete -->
+    <g class="lol-fill">
+      <rect x="18" y="8" width="4" height="64" fill="#b8933f" opacity="0.15"/>
+      <rect x="20" y="68" width="42" height="4" fill="#b8933f" opacity="0.15"/>
+      <rect x="118" y="8" width="4" height="64" fill="#b8933f" opacity="0.15"/>
+      <rect x="78" y="68" width="42" height="4" fill="#b8933f" opacity="0.15"/>
+    </g>
+  </svg>
+  <span class="lol-word">Lords of Luxury</span>
+</div>
+
+<script>
+  (function(){
+    var pre = document.getElementById('preloader');
+    if (!pre) return;
+    var hide = function(){
+      pre.classList.add('done');
+      document.body.classList.remove('loading');
+      setTimeout(function(){ pre.parentNode && pre.parentNode.removeChild(pre); }, 900);
+    };
+    // Minimum show time so the animation completes gracefully
+    var MIN = 2800;
+    var start = Date.now();
+    window.addEventListener('load', function(){
+      var elapsed = Date.now() - start;
+      setTimeout(hide, Math.max(0, MIN - elapsed));
+    });
+    // Safety fallback
+    setTimeout(hide, 5000);
+  })();
+</script>
 
 <!-- Scroll progress indicator -->
 <div class="scroll-progress" aria-hidden="true"></div>
