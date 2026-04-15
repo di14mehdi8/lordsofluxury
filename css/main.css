@@ -138,14 +138,18 @@ h1, h2, h3, h4, h5 {
 /* ---------- Header / Navigation ---------- */
 #site-header {
   position: fixed; top: 38px; left: 0; right: 0; z-index: 1000;
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(184,147,63,0.18);
   transition: var(--transition);
 }
 #site-header.scrolled {
   top: 0;
   background: rgba(10, 10, 10, 0.96);
   backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(184,147,63,0.15);
-  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+  border-bottom: 1px solid rgba(184,147,63,0.28);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.55);
 }
 .header-inner {
   display: flex; align-items: center; justify-content: space-between;
@@ -246,6 +250,20 @@ body.announce-dismissed #site-header { top: 0; }
   position: relative; height: 88vh; min-height: 580px; max-height: 820px;
   display: flex; align-items: center; overflow: hidden;
   background: var(--black);
+  border-bottom: 1px solid rgba(184,147,63,0.28);
+  box-shadow: 0 22px 42px rgba(0,0,0,0.55);
+}
+.hero::before {
+  /* Soft separator beneath the fixed header so the hero reads as its own room */
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 140px;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.55) 0%, transparent 100%);
+  z-index: 2; pointer-events: none;
+}
+.hero::after {
+  /* Gold hairline at the very bottom edge — the clean dividing line */
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
+  background: linear-gradient(to right, transparent 0%, rgba(184,147,63,0.45) 20%, rgba(184,147,63,0.65) 50%, rgba(184,147,63,0.45) 80%, transparent 100%);
+  z-index: 3; pointer-events: none;
 }
 .hero-bg {
   position: absolute; inset: 0;
@@ -307,12 +325,13 @@ body.announce-dismissed #site-header { top: 0; }
   50% { transform: translateX(-50%) translateY(6px); }
 }
 
-/* Hero stats bar */
+/* Hero stats bar (bottom shelf of the hero) */
 .hero-stats {
   position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
-  background: rgba(10,10,10,0.8);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(184,147,63,0.2);
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(184,147,63,0.35);
   display: flex;
 }
 .hero-stat {
