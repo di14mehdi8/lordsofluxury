@@ -674,49 +674,14 @@ section { padding: clamp(3rem, 5.5vw, 5.5rem) 0; }
 .testimonial-loc { font-size: 0.7rem; color: var(--grey); margin-top: 0.2rem; }
 
 /* ---------- Location / Contact ---------- */
-.contact-section { background: var(--charcoal); padding: 0; }
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 0;
-}
-.contact-map,
-.contact-showroom-photo {
-  background: var(--mid);
-  min-height: 320px;
-  position: relative;
-  overflow: hidden;
+.contact-section { background: var(--charcoal); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.contact-map {
+  background: var(--mid); min-height: 500px; position: relative; overflow: hidden;
 }
 .contact-map iframe { width: 100%; height: 100%; border: none; filter: grayscale(1) invert(0.9) contrast(0.9); }
-.contact-showroom-photo img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
-  filter: brightness(0.82) saturate(1.05);
-  transition: transform 0.8s ease, filter 0.8s ease;
-}
-.contact-showroom-photo:hover img { transform: scale(1.04); filter: brightness(0.95) saturate(1.1); }
-.contact-showroom-photo::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(10,10,10,0.55) 0%, transparent 55%);
-  pointer-events: none;
-}
-.contact-showroom-caption {
-  position: absolute; left: 2rem; bottom: 1.5rem;
-  color: var(--cream); font-family: var(--font-serif);
-  font-size: 1rem; letter-spacing: 0.08em;
-  z-index: 2;
-}
-.contact-showroom-caption small {
-  display: block; font-family: var(--font-ui); font-size: 0.65rem;
-  letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold);
-  margin-bottom: 0.35rem;
-}
-.contact-info {
-  padding: clamp(2.5rem, 5vw, 4rem);
-  display: flex; flex-direction: column; justify-content: center;
-  grid-column: 2; grid-row: 1 / 3;
-}
-.contact-details { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 2rem; }
+.contact-info { padding: 5rem; display: flex; flex-direction: column; justify-content: center; }
+.contact-details { display: flex; flex-direction: column; gap: 2rem; margin-top: 3rem; }
 .contact-item { display: flex; gap: 1.5rem; align-items: flex-start; }
 .contact-item-icon {
   width: 48px; height: 48px; border: 1px solid rgba(184,147,63,0.3);
@@ -902,8 +867,7 @@ footer {
   .story-images { height: 400px; }
   .watches-hero-product { grid-template-columns: 1fr; }
   .custom-design-grid { grid-template-columns: 1fr; }
-  .contact-grid { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
-  .contact-info { grid-column: 1; grid-row: auto; }
+  .contact-grid { grid-template-columns: 1fr; }
   .testimonials-track { grid-template-columns: 1fr; }
   .services-grid { grid-template-columns: 1fr; }
   .sell-cta-box { grid-template-columns: 1fr; }
