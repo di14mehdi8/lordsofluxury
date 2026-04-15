@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /cdn-cgi/
+
+# Sitemap
+Sitemap: https://lordsofluxury.com/sitemap.xml
+
+# Crawl-delay for courtesy
+Crawl-delay: 1
