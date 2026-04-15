@@ -228,7 +228,7 @@
   <!-- ===== Theme color ===== -->
   <meta name="theme-color" content="#0a0a0a">
   <style>
-    /* Preloader: twin L monogram, slab serif, revealed top to bottom */
+    /* Preloader: actual brand monogram, tinted gold, revealed top to bottom */
     #preloader {
       position: fixed; inset: 0; z-index: 9999;
       background: #0a0a0a;
@@ -237,17 +237,26 @@
       transition: opacity 0.8s ease, visibility 0.8s ease;
     }
     #preloader.done { opacity: 0; visibility: hidden; pointer-events: none; }
-    #preloader svg {
-      width: clamp(140px, 18vw, 210px);
-      height: auto;
-      filter: drop-shadow(0 0 18px rgba(184,147,63,0.22));
+    #preloader .lol-mark {
+      width: clamp(160px, 20vw, 240px);
+      aspect-ratio: 1000 / 600;
+      background: #b8933f;
+      -webkit-mask: url('images/logo.png') center / contain no-repeat;
+              mask: url('images/logo.png') center / contain no-repeat;
+      clip-path: inset(0 0 100% 0);
+      animation: lol-reveal 1.8s cubic-bezier(0.65,0,0.35,1) 0.15s forwards;
+      filter: drop-shadow(0 0 22px rgba(184,147,63,0.25));
+      position: relative;
     }
-    #preloader .lol-L { fill: #b8933f; }
-    #preloader #lol-wipe-left  rect { transform: scaleY(0); transform-origin: 0 0; animation: lol-wipe 1.5s cubic-bezier(0.65,0,0.35,1) 0.15s forwards; }
-    #preloader #lol-wipe-right rect { transform: scaleY(0); transform-origin: 0 0; animation: lol-wipe 1.5s cubic-bezier(0.65,0,0.35,1) 0.45s forwards; }
     #preloader .lol-glint {
+      position: absolute; left: -10%; right: -10%;
+      top: 50%; height: 2px;
+      background: linear-gradient(to right, transparent, rgba(240,224,176,0.9), transparent);
+      transform: translateY(-50%) scaleX(0);
+      transform-origin: center;
       opacity: 0;
-      animation: lol-glint 1.2s ease 1.95s forwards;
+      animation: lol-glint 1.1s ease 2.0s forwards;
+      pointer-events: none;
     }
     #preloader .lol-word {
       font-family: 'Playfair Display', Georgia, serif;
@@ -255,19 +264,23 @@
       text-transform: uppercase;
       color: #b8933f;
       opacity: 0;
-      animation: lol-word 0.9s ease 2.0s forwards;
+      animation: lol-word 0.9s ease 2.1s forwards;
       padding-left: 0.55em;
     }
-    @keyframes lol-wipe  { to { transform: scaleY(1); } }
-    @keyframes lol-glint { 0% { opacity: 0; } 40% { opacity: 0.9; } 100% { opacity: 0; } }
-    @keyframes lol-word  {
+    @keyframes lol-reveal { to { clip-path: inset(0 0 0 0); } }
+    @keyframes lol-glint  {
+      0%   { opacity: 0; transform: translateY(-50%) scaleX(0); }
+      40%  { opacity: 1; transform: translateY(-50%) scaleX(1); }
+      100% { opacity: 0; transform: translateY(-50%) scaleX(1); }
+    }
+    @keyframes lol-word   {
       0%   { opacity: 0; transform: translateY(6px); letter-spacing: 0.7em; }
       100% { opacity: 1; transform: translateY(0);  letter-spacing: 0.55em; }
     }
     body.loading { overflow: hidden; }
     @media (prefers-reduced-motion: reduce) {
-      #preloader #lol-wipe-left rect, #preloader #lol-wipe-right rect { transform: scaleY(1); animation: none; }
-      #preloader .lol-glint, #preloader .lol-word { animation-duration: 0.01s; animation-delay: 0s; opacity: 1; }
+      #preloader .lol-mark { clip-path: none; animation: none; }
+      #preloader .lol-glint, #preloader .lol-word { animation: none; opacity: 1; }
     }
   </style>
 </head>
@@ -277,60 +290,10 @@
      PRELOADER
 ============================== -->
 <div id="preloader" role="status" aria-label="Loading Lords of Luxury">
-  <svg viewBox="0 0 200 180" aria-hidden="true">
-    <defs>
-      <!-- Left L: slab serif with top cap and right-foot serif -->
-      <path id="lol-path-left" d="
-        M 28 24
-        L 78 24
-        L 78 38
-        L 60 38
-        L 60 144
-        L 96 144
-        L 96 132
-        L 110 132
-        L 110 158
-        L 28 158
-        L 28 144
-        L 44 144
-        L 44 38
-        L 28 38
-        Z
-      "/>
-      <!-- Right L: mirrored across x=100 -->
-      <path id="lol-path-right" d="
-        M 172 24
-        L 122 24
-        L 122 38
-        L 140 38
-        L 140 144
-        L 104 144
-        L 104 132
-        L 90 132
-        L 90 158
-        L 172 158
-        L 172 144
-        L 156 144
-        L 156 38
-        L 172 38
-        Z
-      "/>
-      <clipPath id="lol-wipe-left"><rect x="0" y="20" width="100" height="144"/></clipPath>
-      <clipPath id="lol-wipe-right"><rect x="100" y="20" width="100" height="144"/></clipPath>
-    </defs>
-
-    <g clip-path="url(#lol-wipe-left)">
-      <use href="#lol-path-left" class="lol-L"/>
-    </g>
-    <g clip-path="url(#lol-wipe-right)">
-      <use href="#lol-path-right" class="lol-L"/>
-    </g>
-
-    <!-- Subtle gold glint sweep across the mark once drawn -->
-    <g class="lol-glint">
-      <rect x="20" y="85" width="160" height="2" fill="#f0e0b0" opacity="0.6"/>
-    </g>
-  </svg>
+  <div class="lol-mark-wrap" style="position:relative;display:inline-block;">
+    <div class="lol-mark" aria-hidden="true"></div>
+    <span class="lol-glint" aria-hidden="true"></span>
+  </div>
   <span class="lol-word">Lords of Luxury</span>
 </div>
 
