@@ -252,6 +252,12 @@ body.announce-dismissed #site-header { top: 0; }
   background: var(--black);
   border-bottom: 1px solid rgba(184,147,63,0.28);
   box-shadow: 0 22px 42px rgba(0,0,0,0.55);
+  padding-top: 138px;
+}
+body.announce-dismissed .hero { padding-top: 100px; }
+@media (max-width: 900px) {
+  .hero { padding-top: 128px; }
+  body.announce-dismissed .hero { padding-top: 90px; }
 }
 .hero::before {
   /* Soft separator beneath the fixed header so the hero reads as its own room */
